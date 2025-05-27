@@ -135,11 +135,11 @@
                 <div class="space-y-4 bg-slate-50 p-5 rounded-lg border border-slate-200">
                     <p><strong>Concept:</strong> A simple comparison-based sorting algorithm.</p>
                     <p><strong>Mechanism:</strong> Repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order. The pass through the list is repeated until no swaps are needed, indicating that the list is sorted.</p>
-                    <p><strong>Educational Value:</strong> Excellent for teaching basic sorting concepts and for comparing language features due to its straightforward logic.</p>
+                    <p><strong>Educational Value:</strong> Excellent for basic sorting concepts and for comparing language features due to its straightforward logic.</p>
                     <div><strong>Efficiency:</strong> Not efficient for large datasets.
                         <ul class="list-disc list-inside ml-5 mt-1 text-sm">
-                            <li>Time Complexity: $O(n^2)$ in average and worst cases.</li>
-                            <li>Best Case (already sorted with optimization): $O(n)$.</li>
+                            <li>Time Complexity: O(n<sup>2</sup>) in average and worst cases.</li>
+                            <li>Best Case (already sorted with optimization): O(n).</li>
                         </ul>
                     </div>
                 </div>
@@ -288,7 +288,7 @@ arr[j+1] = temp;</code></div>
                 </div>
                 <div id="performanceComparison" class="comparison-content hidden bg-slate-50 p-5 rounded-lg border border-slate-200">
                     <h3 class="text-xl font-semibold mb-3 text-emerald-700">Performance</h3>
-                    <p class="mb-2 text-sm"><strong>Algorithm:</strong> $O(n^2)$ for all. Dominant for large $n$.</p>
+                    <p class="mb-2 text-sm"><strong>Algorithm:</strong> O(n<sup>2</sup>) for all. Dominant for large n.</p>
                     <div class="grid md:grid-cols-3 gap-4 text-sm">
                         <div><strong>C:</strong> Generally fastest (compiled).</div>
                         <div><strong>Java:</strong> Fast (JIT on JVM). Some overhead.</div>
@@ -348,7 +348,7 @@ arr[j+1] = temp;</code></div>
                 <p class="mb-6 text-slate-600 leading-relaxed">This final section summarizes the main learning points and reflects on the algorithm's practical use.</p>
                 <div class="bg-slate-50 p-5 rounded-lg border border-slate-200 space-y-5">
                     <div>
-                        <h3 class="text-xl font-semibold text-slate-700">Key Takeaways for Teaching</h3>
+                        <h3 class="text-xl font-semibold text-slate-700">Key Takeaways</h3>
                         <ul class="list-disc list-inside space-y-1 mt-2 pl-5 text-slate-600">
                             <li><strong>Illustrates Trade-offs:</strong> Productivity (Python) vs. Performance (C). Java as a balance.</li>
                             <li><strong>Highlights Type Systems:</strong> Dynamic vs. Static typing.</li>
@@ -361,7 +361,7 @@ arr[j+1] = temp;</code></div>
                          <ul class="list-disc list-inside space-y-1 mt-2 pl-5 text-slate-600">
                             <li><strong>Simplicity:</strong> Easy to understand/implement.</li>
                             <li><strong>Educational Tool:</strong> Great for comparing language differences.</li>
-                            <li><strong>Practicality:</strong> Not for large datasets ($O(n^2)$). Prefer Merge/Quick/TimSort.</li>
+                            <li><strong>Practicality:</strong> Not for large datasets (O(n<sup>2</sup>)). Prefer Merge/Quick/TimSort.</li>
                             <li><strong>Core Message:</strong> Choose the right language for the task.</li>
                         </ul>
                     </div>
