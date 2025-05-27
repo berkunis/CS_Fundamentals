@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <stdbool.h> // For bool type
+#include <stdbool.h>
 
 // Function to swap two elements
 void swap(int *xp, int *yp) {
@@ -10,6 +10,7 @@ void swap(int *xp, int *yp) {
 
 // Function to implement bubble sort
 void bubbleSort(int arr[], int n) {
+    if (n <= 0) return; // Explicitly handle empty or invalid size
     int i, j;
     bool swapped;
     for (i = 0; i < n - 1; i++) {
@@ -20,7 +21,6 @@ void bubbleSort(int arr[], int n) {
                 swapped = true;
             }
         }
-        // IF no two elements were swapped by inner loop, then break
         if (swapped == false)
             break;
     }
@@ -28,6 +28,10 @@ void bubbleSort(int arr[], int n) {
 
 // Function to print an array
 void printArray(int arr[], int size) {
+    if (size <= 0) { // Handle empty or invalid size
+        printf("\n");
+        return;
+    }
     int i;
     for (i = 0; i < size; i++)
         printf("%d ", arr[i]);
@@ -56,14 +60,20 @@ int main() {
     printArray(arr2, n2);
     printf("--------------------\n");
     
-    int empty_arr[] = {};
-    int n_empty = 0; // Or sizeof(empty_arr)/sizeof(int) if compiler allows zero-sized array
+    // For the empty case, pass NULL or a valid pointer with size 0
+    // Passing NULL is conceptually clearer for "no array"
+    // int *empty_arr = NULL; // Option A: NULL pointer
+    int dummy_arr[1]; // Option B: A valid pointer, but size 0 passed
+    int n_empty = 0; 
     printf("C Example (Empty Array):\n");
     printf("Original array: ");
-    printArray(empty_arr, n_empty);
-    bubbleSort(empty_arr, n_empty);
+    // printArray(empty_arr, n_empty); // if using Option A (NULL)
+    printArray(dummy_arr, n_empty); // if using Option B
+    // bubbleSort(empty_arr, n_empty); // if using Option A (NULL)
+    bubbleSort(dummy_arr, n_empty); // if using Option B
     printf("Sorted array: ");
-    printArray(empty_arr, n_empty);
+    // printArray(empty_arr, n_empty); // if using Option A (NULL)
+    printArray(dummy_arr, n_empty); // if using Option B
     printf("--------------------\n");
 
     int single_arr[] = {42};

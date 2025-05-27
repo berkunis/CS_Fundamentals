@@ -1,6 +1,6 @@
 import java.util.Arrays;
 
-public class BubbleSort {
+public class BubbleSort_end { // Class name matches the filename (if you keep it as BubbleSort_end.java)
 
     void bubbleSort(int arr[]) {
         int n = arr.length;
@@ -29,7 +29,8 @@ public class BubbleSort {
 
     // Driver method to test above
     public static void main(String args[]) {
-        BubbleSort ob = new BubbleSort();
+        // THIS IS THE LINE THAT NEEDS TO CHANGE:
+        BubbleSort_end ob = new BubbleSort_end(); // Create an object of the CURRENT class
         
         int arr1[] = {64, 34, 25, 12, 22, 11, 90};
         System.out.println("Java Example 1:");
