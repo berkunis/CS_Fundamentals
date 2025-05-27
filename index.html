@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Bubble Sort Comparison</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif; /* Ensure Inter or a fallback is used */
+            background-color: #f8fafc; /* bg-slate-50 or a light neutral */
+            color: #334155; /* text-slate-700 or a dark gray for text */
+        }
+        .tab-button {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        .tab-button.active {
+            background-color: #3B82F6; /* blue-500 */
+            color: white;
+            border-bottom-color: #2563EB; /* blue-600 */
+        }
+        .tab-button:not(.active):hover {
+            background-color: #EFF6FF; /* blue-50 */
+            color: #1D4ED8; /* blue-700 */
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        .code-block {
+            background-color: #1E293B; /* slate-800 */
+            color: #E2E8F0; /* slate-200 */
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+            font-size: 0.875rem; /* text-sm */
+            line-height: 1.4;
+        }
+        .code-block code {
+            white-space: pre;
+        }
+        .comparison-button.active, .language-button.active, .control-button.active {
+            background-color: #10B981; /* emerald-500 */
+            color: white;
+        }
+        .comparison-button:not(.active):hover, .language-button:not(.active):hover, .control-button:not(.active):hover {
+            background-color: #D1FAE5; /* emerald-100 */
+        }
+         .language-button.active {
+            background-color: #6366F1; /* indigo-500 */
+        }
+        .language-button:not(.active):hover {
+            background-color: #E0E7FF; /* indigo-100 */
+        }
+        table th, table td {
+            border: 1px solid #E5E7EB; /* gray-200 */
+            padding: 0.75rem;
+            text-align: left;
+        }
+        table th {
+            background-color: #F3F4F6; /* gray-100 */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px; 
+            max-height: 350px;
+            background-color: #ffffff; 
+            padding: 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid #e5e7eb; /* gray-200 */
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 320px; /* Adjusted for md screens */
+                max-height: 400px;
+            }
+        }
+        /* General button styling */
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem; /* rounded-md */
+            font-weight: 600; /* font-semibold */
+            transition: background-color 0.2s ease-in-out;
+            border: 1px solid transparent;
+        }
+        .btn-primary {
+            background-color: #3B82F6; /* blue-500 */
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #2563EB; /* blue-600 */
+        }
+        .btn-secondary {
+            background-color: #6B7280; /* gray-500 */
+            color: white;
+        }
+        .btn-secondary:hover {
+            background-color: #4B5563; /* gray-600 */
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col items-center py-8 px-4">
+
+    <div class="container mx-auto max-w-5xl w-full bg-white shadow-2xl rounded-xl p-6 sm:p-10">
+        <header class="mb-8 text-center">
+            <h1 class="text-3xl sm:text-4xl font-bold text-slate-900">Bubble Sort: A Comparative Look</h1>
+            <p class="text-slate-600 mt-2 text-base sm:text-lg">Implementations in Python, C, and Java – Understanding Differences and Trade-offs</p>
+            <p class="text-slate-500 mt-3 text-sm sm:text-base">By Dr. Isil Berkun, Clark College</p>
+        </header>
+
+        <nav class="mb-8">
+            <ul class="flex flex-wrap justify-center border-b-2 border-slate-200">
+                <li><button class="tab-button active py-3 px-5 text-sm sm:text-base font-medium" onclick="showSection('introduction')">Introduction</button></li>
+                <li><button class="tab-button py-3 px-5 text-sm sm:text-base font-medium" onclick="showSection('deepDive')">Language Deep Dive</button></li>
+                <li><button class="tab-button py-3 px-5 text-sm sm:text-base font-medium" onclick="showSection('comparison')">Comparative Analysis</button></li>
+                <li><button class="tab-button py-3 px-5 text-sm sm:text-base font-medium" onclick="showSection('visualize')">Visualize</button></li>
+                <li><button class="tab-button py-3 px-5 text-sm sm:text-base font-medium" onclick="showSection('conclusion')">Takeaways & Conclusion</button></li>
+            </ul>
+        </nav>
+
+        <main class="mt-6">
+            <section id="introduction" class="content-section active">
+                <h2 class="text-2xl font-semibold mb-4 text-slate-700">What is Bubble Sort?</h2>
+                <p class="mb-4 text-slate-600 leading-relaxed">This section introduces the fundamental concepts of the Bubble Sort algorithm, including its mechanism, educational value, and inherent efficiency limitations. Understanding these basics is key before diving into specific language implementations.</p>
+                <div class="space-y-4 bg-slate-50 p-5 rounded-lg border border-slate-200">
+                    <p><strong>Concept:</strong> A simple comparison-based sorting algorithm.</p>
+                    <p><strong>Mechanism:</strong> Repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order. The pass through the list is repeated until no swaps are needed, indicating that the list is sorted.</p>
+                    <p><strong>Educational Value:</strong> Excellent for teaching basic sorting concepts and for comparing language features due to its straightforward logic.</p>
+                    <div><strong>Efficiency:</strong> Not efficient for large datasets.
+                        <ul class="list-disc list-inside ml-5 mt-1 text-sm">
+                            <li>Time Complexity: $O(n^2)$ in average and worst cases.</li>
+                            <li>Best Case (already sorted with optimization): $O(n)$.</li>
+                        </ul>
+                    </div>
+                </div>
+                <h3 class="text-xl font-semibold mt-6 mb-3 text-slate-700">The Core Logic (Conceptual)</h3>
+                <div class="code-block"><code>procedure bubbleSort(List A)
+  n = length(A)
+  repeat
+    swapped = false
+    for i = 1 to n-1 inclusive do
+      if A[i-1] > A[i] then
+        swap(A[i-1], A[i])
+        swapped = true
+      end if
+    end for
+    n = n - 1 // Optimization: last element is now in place
+  until not swapped
+end procedure</code></div>
+                <ul class="list-disc list-inside mt-4 space-y-1 text-slate-600 pl-5">
+                    <li><strong>Outer Loop:</strong> Ensures each element "bubbles up" to its correct position.</li>
+                    <li><strong>Inner Loop:</strong> Performs the adjacent comparisons and swaps.</li>
+                    <li><strong>`swapped` flag:</strong> Optimization to terminate early if the list becomes sorted.</li>
+                </ul>
+            </section>
+
+            <section id="deepDive" class="content-section">
+                <h2 class="text-2xl font-semibold mb-4 text-slate-700">Language Implementation Deep Dive</h2>
+                <p class="mb-6 text-slate-600 leading-relaxed">Explore the nuances of implementing Bubble Sort in Python, C, and Java. Select a language below to view its specific highlights, including code snippets, syntax characteristics, and key pros/cons related to this algorithm.</p>
+                <div class="flex flex-wrap justify-center gap-3 mb-6">
+                    <button class="language-button active btn btn-secondary py-2 px-4" onclick="showLanguage('python')">Python</button>
+                    <button class="language-button btn btn-secondary py-2 px-4" onclick="showLanguage('c')">C</button>
+                    <button class="language-button btn btn-secondary py-2 px-4" onclick="showLanguage('java')">Java</button>
+                </div>
+
+                <div id="pythonContent" class="language-content active bg-slate-50 p-5 rounded-lg border border-slate-200">
+                    <h3 class="text-xl font-semibold mb-3 text-indigo-700">Python Highlights</h3>
+                    <p><strong>Conciseness:</strong> Python's syntax is very compact.</p>
+                    <div class="code-block my-2"><code># Swapping elements
+my_list[j], my_list[j+1] = my_list[j+1], my_list[j]</code></div>
+                    <p><strong>Dynamic Typing:</strong> No need to declare variable types.</p>
+                    <p><strong>Readability:</strong> Often considered highly readable.</p>
+                    <p><strong>Pros:</strong> Rapid development, easy to write and understand.</p>
+                    <p class="mt-2"><strong>Example Snippet (core logic):</strong></p>
+                    <div class="code-block mt-1"><code>n = len(list_to_sort)
+for i in range(n):
+    swapped = False
+    for j in range(0, n - i - 1):
+        if list_to_sort[j] > list_to_sort[j+1]:
+            list_to_sort[j], list_to_sort[j+1] = list_to_sort[j+1], list_to_sort[j]
+            swapped = True
+    if not swapped:
+        break</code></div>
+                </div>
+
+                <div id="cContent" class="language-content hidden bg-slate-50 p-5 rounded-lg border border-slate-200">
+                    <h3 class="text-xl font-semibold mb-3 text-indigo-700">C Highlights</h3>
+                    <p><strong>Verbosity:</strong> More explicit code is required.</p>
+                    <div class="code-block my-2"><code>// Swapping elements (often a helper function)
+void swap(int *xp, int *yp) {
+    int temp = *xp;
+    *xp = *yp;
+    *yp = temp;
+}
+// In sort: swap(&arr[j], &arr[j+1]);</code></div>
+                    <p><strong>Static Typing:</strong> Variable types must be declared.</p>
+                    <p><strong>Manual Operations:</strong> Array size calculation, pointer usage.</p>
+                    <p><strong>Pros:</strong> Potential for high performance, fine-grained control.</p>
+                    <p><strong>Cons:</strong> More complex, higher chance of errors.</p>
+                    <p class="mt-2"><strong>Example Snippet (core logic):</strong></p>
+                    <div class="code-block mt-1"><code>for (i = 0; i < n - 1; i++) {
+    swapped = false;
+    for (j = 0; j < n - i - 1; j++) {
+        if (arr[j] > arr[j + 1]) {
+            swap(&arr[j], &arr[j + 1]);
+            swapped = true;
+        }
+    }
+    if (swapped == false) break;
+}</code></div>
+                </div>
+
+                <div id="javaContent" class="language-content hidden bg-slate-50 p-5 rounded-lg border border-slate-200">
+                    <h3 class="text-xl font-semibold mb-3 text-indigo-700">Java Highlights</h3>
+                    <p><strong>Object-Oriented Structure:</strong> Code is typically organized within classes.</p>
+                    <div class="code-block my-2"><code>// Swapping elements
+int temp = arr[j];
+arr[j] = arr[j+1];
+arr[j+1] = temp;</code></div>
+                    <p><strong>Static Typing:</strong> Explicit type declarations.</p>
+                    <p><strong>Boilerplate:</strong> More standard code (class definitions, main method).</p>
+                    <p><strong>Pros:</strong> Platform independence (JVM), strong typing, rich ecosystem.</p>
+                    <p><strong>Cons:</strong> Can be more verbose than Python for simple tasks.</p>
+                    <p class="mt-2"><strong>Example Snippet (core logic):</strong></p>
+                    <div class="code-block mt-1"><code>void bubbleSort(int[] arr) {
+    int n = arr.length;
+    boolean swapped;
+    for (int i = 0; i < n - 1; i++) {
+        swapped = false;
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+                swapped = true;
+            }
+        }
+        if (!swapped) break;
+    }
+}</code></div>
+                </div>
+            </section>
+
+            <section id="comparison" class="content-section">
+                <h2 class="text-2xl font-semibold mb-4 text-slate-700">Comparative Analysis</h2>
+                <p class="mb-6 text-slate-600 leading-relaxed">This section provides a direct comparison of Python, C, and Java across several key aspects. Use the buttons to select a category. The summary table offers a quick overview.</p>
+                <div class="flex flex-wrap justify-center gap-2 mb-6">
+                    <button class="comparison-button active btn btn-secondary py-2 px-3 text-xs sm:text-sm" onclick="showComparison('syntax')">Syntax & Readability</button>
+                    <button class="comparison-button btn btn-secondary py-2 px-3 text-xs sm:text-sm" onclick="showComparison('typeSystem')">Type System & Flexibility</button>
+                    <button class="comparison-button btn btn-secondary py-2 px-3 text-xs sm:text-sm" onclick="showComparison('swapping')">Swapping Elements</button>
+                    <button class="comparison-button btn btn-secondary py-2 px-3 text-xs sm:text-sm" onclick="showComparison('performance')">Performance</button>
+                    <button class="comparison-button btn btn-secondary py-2 px-3 text-xs sm:text-sm" onclick="showComparison('errorHandling')">Error Handling</button>
+                </div>
+
+                <div id="syntaxComparison" class="comparison-content active bg-slate-50 p-5 rounded-lg border border-slate-200">
+                    <h3 class="text-xl font-semibold mb-3 text-emerald-700">Syntax & Readability</h3>
+                    <div class="grid md:grid-cols-3 gap-4 text-sm">
+                        <div><strong>Python:</strong> Most concise. Often "executable pseudocode."</div>
+                        <div><strong>C:</strong> Verbose. Lower readability due to low-level details.</div>
+                        <div><strong>Java:</strong> Medium verbosity (OOP). Good readability.</div>
+                    </div>
+                </div>
+                <div id="typeSystemComparison" class="comparison-content hidden bg-slate-50 p-5 rounded-lg border border-slate-200">
+                    <h3 class="text-xl font-semibold mb-3 text-emerald-700">Type System & Flexibility</h3>
+                     <div class="grid md:grid-cols-3 gap-4 text-sm">
+                        <div><strong>Python (Dynamic):</strong> Highly flexible. Runtime type checking.</div>
+                        <div><strong>C (Static):</strong> Less flexible. Type-specific functions.</div>
+                        <div><strong>Java (Static):</strong> Moderately flexible. Overloading/Generics.</div>
+                    </div>
+                </div>
+                <div id="swappingComparison" class="comparison-content hidden bg-slate-50 p-5 rounded-lg border border-slate-200">
+                    <h3 class="text-xl font-semibold mb-3 text-emerald-700">Swapping Elements</h3>
+                     <div class="grid md:grid-cols-3 gap-4 text-sm">
+                        <div><strong>Python:</strong> <code>a, b = b, a</code></div>
+                        <div><strong>C:</strong> Temp var + pointers (helper function).</div>
+                        <div><strong>Java:</strong> Temp var.</div>
+                    </div>
+                </div>
+                <div id="performanceComparison" class="comparison-content hidden bg-slate-50 p-5 rounded-lg border border-slate-200">
+                    <h3 class="text-xl font-semibold mb-3 text-emerald-700">Performance</h3>
+                    <p class="mb-2 text-sm"><strong>Algorithm:</strong> $O(n^2)$ for all. Dominant for large $n$.</p>
+                    <div class="grid md:grid-cols-3 gap-4 text-sm">
+                        <div><strong>C:</strong> Generally fastest (compiled).</div>
+                        <div><strong>Java:</strong> Fast (JIT on JVM). Some overhead.</div>
+                        <div><strong>Python:</strong> Typically slowest (interpreted).</div>
+                    </div>
+                </div>
+                <div id="errorHandlingComparison" class="comparison-content hidden bg-slate-50 p-5 rounded-lg border border-slate-200">
+                    <h3 class="text-xl font-semibold mb-3 text-emerald-700">Error Handling & Robustness</h3>
+                    <div class="grid md:grid-cols-3 gap-4 text-sm">
+                        <div><strong>Python:</strong> Runtime errors (`TypeError`, `IndexError`).</div>
+                        <div><strong>C:</strong> Low-level errors (buffer overflows). No auto bounds check.</div>
+                        <div><strong>Java:</strong> Compile-time type check. Runtime `ArrayIndexOutOfBoundsException`.</div>
+                    </div>
+                </div>
+
+                <h3 class="text-xl font-semibold mt-8 mb-4 text-slate-700">Summary Table</h3>
+                <div class="overflow-x-auto bg-white rounded-lg border border-slate-200">
+                    <table class="min-w-full text-sm">
+                        <thead class="bg-slate-100">
+                            <tr>
+                                <th class="px-4 py-3 text-left font-semibold text-slate-700">Feature</th>
+                                <th class="px-4 py-3 text-left font-semibold text-slate-700">Python</th>
+                                <th class="px-4 py-3 text-left font-semibold text-slate-700">C</th>
+                                <th class="px-4 py-3 text-left font-semibold text-slate-700">Java</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200">
+                            <tr><td class="px-4 py-3 font-medium text-slate-600">Typing</td><td class="px-4 py-3">Dynamic</td><td class="px-4 py-3">Static</td><td class="px-4 py-3">Static</td></tr>
+                            <tr><td class="px-4 py-3 font-medium text-slate-600">Verbosity</td><td class="px-4 py-3">Low</td><td class="px-4 py-3">High</td><td class="px-4 py-3">Medium</td></tr>
+                            <tr><td class="px-4 py-3 font-medium text-slate-600">Readability</td><td class="px-4 py-3">Generally High</td><td class="px-4 py-3">Can be Lower</td><td class="px-4 py-3">Medium</td></tr>
+                            <tr><td class="px-4 py-3 font-medium text-slate-600">Performance</td><td class="px-4 py-3">Slower</td><td class="px-4 py-3">Fastest</td><td class="px-4 py-3">Fast</td></tr>
+                            <tr><td class="px-4 py-3 font-medium text-slate-600">Swapping</td><td class="px-4 py-3"><code>a,b = b,a</code></td><td class="px-4 py-3">Temp var + pointers</td><td class="px-4 py-3">Temp var</td></tr>
+                            <tr><td class="px-4 py-3 font-medium text-slate-600">Reusability</td><td class="px-4 py-3">High</td><td class="px-4 py-3">Low</td><td class="px-4 py-3">Medium</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="visualize" class="content-section">
+                <h2 class="text-2xl font-semibold mb-4 text-slate-700">Visualize Bubble Sort</h2>
+                <p class="mb-4 text-slate-600 leading-relaxed">Watch the Bubble Sort algorithm in action! Enter a comma-separated list of numbers (max 20, positive integers recommended for best display), or use the default. Click "Sort" to see the elements "bubble up" to their correct positions. The bars represent the numbers, and their colors change to indicate comparisons and swaps.</p>
+                <div class="flex flex-col sm:flex-row gap-3 mb-4 items-center">
+                    <input type="text" id="arrayInput" class="flex-grow p-2 border border-slate-300 rounded-md focus:ring-blue-500 focus:border-blue-500 w-full sm:w-auto" placeholder="e.g., 5,1,4,2,8">
+                    <div class="flex gap-2 flex-shrink-0">
+                        <button id="sortButton" class="btn btn-primary">Sort</button>
+                        <button id="resetButton" class="btn btn-secondary">Reset</button>
+                    </div>
+                </div>
+                <div id="visualizerStatus" class="mb-3 text-sm text-slate-600 h-6 min-h-[1.5rem]">Enter an array and click Sort.</div>
+                <div class="chart-container">
+                    <canvas id="bubbleSortChart"></canvas>
+                </div>
+            </section>
+
+            <section id="conclusion" class="content-section">
+                <h2 class="text-2xl font-semibold mb-4 text-slate-700">Key Takeaways & Conclusion</h2>
+                <p class="mb-6 text-slate-600 leading-relaxed">This final section summarizes the main learning points and reflects on the algorithm's practical use.</p>
+                <div class="bg-slate-50 p-5 rounded-lg border border-slate-200 space-y-5">
+                    <div>
+                        <h3 class="text-xl font-semibold text-slate-700">Key Takeaways for Teaching</h3>
+                        <ul class="list-disc list-inside space-y-1 mt-2 pl-5 text-slate-600">
+                            <li><strong>Illustrates Trade-offs:</strong> Productivity (Python) vs. Performance (C). Java as a balance.</li>
+                            <li><strong>Highlights Type Systems:</strong> Dynamic vs. Static typing.</li>
+                            <li><strong>Shows Language Paradigms:</strong> Procedural, Scripting, OOP.</li>
+                            <li><strong>Touches on Memory Management:</strong> Implicit vs. Explicit.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-slate-700">Conclusion on Bubble Sort</h3>
+                         <ul class="list-disc list-inside space-y-1 mt-2 pl-5 text-slate-600">
+                            <li><strong>Simplicity:</strong> Easy to understand/implement.</li>
+                            <li><strong>Educational Tool:</strong> Great for comparing language differences.</li>
+                            <li><strong>Practicality:</strong> Not for large datasets ($O(n^2)$). Prefer Merge/Quick/TimSort.</li>
+                            <li><strong>Core Message:</strong> Choose the right language for the task.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="mt-10 pt-6 border-t border-slate-200 text-center">
+            <p class="text-sm text-slate-500">&copy; 2025 Dr. Isil Berkun, Clark College. Interactive SPA by Gemini.</p>
+        </footer>
+    </div>
+
+    <script>
+        let currentSection = 'introduction';
+        let currentLanguage = 'python';
+        let currentComparison = 'syntax';
+        let bubbleSortChartInstance = null;
+        let visualizerArray = [];
+        let defaultArray = [64, 34, 25, 12, 22, 11, 90];
+        let isSorting = false;
+        let animationSpeed = 300; // ms per step
+
+        const COLORS = {
+            DEFAULT: 'rgba(100, 116, 139, 0.6)', // slate-500 with opacity
+            COMPARE: 'rgba(250, 204, 21, 0.8)',  // yellow-400 with opacity
+            SWAP: 'rgba(59, 130, 246, 0.8)',   // blue-500 with opacity
+            SORTED: 'rgba(16, 185, 129, 0.8)'  // emerald-500 with opacity
+        };
+
+        function showSection(sectionId) {
+            if (document.getElementById(currentSection)) {
+                 document.getElementById(currentSection).classList.remove('active');
+            }
+            const currentButton = document.querySelector(`.tab-button[onclick="showSection('${currentSection}')"]`);
+            if (currentButton) {
+                currentButton.classList.remove('active');
+            }
+            
+            if (document.getElementById(sectionId)) {
+                document.getElementById(sectionId).classList.add('active');
+            }
+            const newButton = document.querySelector(`.tab-button[onclick="showSection('${sectionId}')"]`);
+            if (newButton) {
+                newButton.classList.add('active');
+            }
+            
+            currentSection = sectionId;
+            if (sectionId === 'visualize' && !bubbleSortChartInstance) {
+                setupVisualizer();
+            } else if (sectionId === 'visualize' && bubbleSortChartInstance && !isSorting) {
+                // Ensure chart is updated if returning to tab
+                 updateChartDisplay(visualizerArray, generateColors(visualizerArray.length), document.getElementById('visualizerStatus').textContent || "Visualizer ready.");
+            }
+        }
+
+        function showLanguage(languageId) {
+            document.getElementById(currentLanguage + 'Content').classList.add('hidden');
+            document.getElementById(currentLanguage + 'Content').classList.remove('active');
+            document.querySelector(`.language-button[onclick="showLanguage('${currentLanguage}')"]`).classList.remove('active');
+
+            document.getElementById(languageId + 'Content').classList.remove('hidden');
+            document.getElementById(languageId + 'Content').classList.add('active');
+            document.querySelector(`.language-button[onclick="showLanguage('${languageId}')"]`).classList.add('active');
+            
+            currentLanguage = languageId;
+        }
+
+        function showComparison(comparisonId) {
+            document.getElementById(currentComparison + 'Comparison').classList.add('hidden');
+            document.getElementById(currentComparison + 'Comparison').classList.remove('active');
+            document.querySelector(`.comparison-button[onclick="showComparison('${currentComparison}')"]`).classList.remove('active');
+
+            document.getElementById(comparisonId + 'Comparison').classList.remove('hidden');
+            document.getElementById(comparisonId + 'Comparison').classList.add('active');
+            document.querySelector(`.comparison-button[onclick="showComparison('${comparisonId}')"]`).classList.add('active');
+
+            currentComparison = comparisonId;
+        }
+        
+        function updateChartDisplay(data, backgroundColors, statusText = "Visualizer ready.") {
+            if (bubbleSortChartInstance) {
+                bubbleSortChartInstance.data.labels = data.map(String);
+                bubbleSortChartInstance.data.datasets[0].data = data;
+                bubbleSortChartInstance.data.datasets[0].backgroundColor = backgroundColors;
+                bubbleSortChartInstance.update('none'); 
+            }
+             const statusEl = document.getElementById('visualizerStatus');
+             if(statusEl) statusEl.textContent = statusText;
+        }
+        
+        function generateColors(length, highlightInfos = []) {
+            const colors = Array(length).fill(COLORS.DEFAULT);
+            highlightInfos.forEach(info => {
+                 if (info && typeof info.index === 'number' && info.index >= 0 && info.index < length) {
+                    colors[info.index] = info.color;
+                }
+            });
+            return colors;
+        }
+
+        async function bubbleSortVisualize() {
+            if (isSorting) return;
+            isSorting = true;
+            document.getElementById('sortButton').disabled = true;
+            document.getElementById('resetButton').disabled = true;
+            document.getElementById('arrayInput').disabled = true;
+
+            let arr = [...visualizerArray];
+            let n = arr.length;
+            let swappedOuter;
+
+            for (let i = 0; i < n - 1; i++) {
+                swappedOuter = false;
+                 // Highlight elements already sorted in previous passes
+                let passColors = generateColors(n);
+                for(let k=0; k < i; k++){
+                    passColors[n-1-k] = COLORS.SORTED;
+                }
+
+                for (let j = 0; j < n - i - 1; j++) {
+                    let currentColors = [...passColors];
+                    currentColors[j] = COLORS.COMPARE;
+                    currentColors[j+1] = COLORS.COMPARE;
+                    updateChartDisplay(arr, currentColors, `Pass ${i+1}: Comparing ${arr[j]} and ${arr[j+1]}`);
+                    await new Promise(resolve => setTimeout(resolve, animationSpeed));
+
+                    if (arr[j] > arr[j + 1]) {
+                        currentColors[j] = COLORS.SWAP;
+                        currentColors[j+1] = COLORS.SWAP;
+                        updateChartDisplay(arr, currentColors, `Swapping ${arr[j]} and ${arr[j+1]}`);
+                        await new Promise(resolve => setTimeout(resolve, animationSpeed));
+                        
+                        let temp = arr[j];
+                        arr[j] = arr[j + 1];
+                        arr[j + 1] = temp;
+                        swappedOuter = true;
+                        
+                        updateChartDisplay(arr, currentColors, `Swapped. Array is now: [${arr.join(', ')}]`);
+                        await new Promise(resolve => setTimeout(resolve, animationSpeed));
+                    } else {
+                         updateChartDisplay(arr, passColors, `${arr[j]} <= ${arr[j+1]}. No swap.`);
+                         await new Promise(resolve => setTimeout(resolve, animationSpeed));
+                    }
+                }
+                // Mark the last element of this pass as sorted
+                passColors[n - 1 - i] = COLORS.SORTED;
+                updateChartDisplay(arr, passColors, `Element ${arr[n - 1 - i]} is sorted. End of Pass ${i+1}.`);
+                await new Promise(resolve => setTimeout(resolve, animationSpeed));
+
+                if (!swappedOuter) {
+                    updateChartDisplay(arr, Array(n).fill(COLORS.SORTED), "No swaps in last pass. Array is sorted!");
+                    break; 
+                }
+            }
+            
+            updateChartDisplay(arr, Array(n).fill(COLORS.SORTED), "Array is fully sorted!");
+            isSorting = false;
+            document.getElementById('sortButton').disabled = false;
+            document.getElementById('resetButton').disabled = false;
+            document.getElementById('arrayInput').disabled = false;
+        }
+
+        function setupVisualizer() {
+            const arrayInput = document.getElementById('arrayInput');
+            const sortButton = document.getElementById('sortButton');
+            const resetButton = document.getElementById('resetButton');
+            const ctx = document.getElementById('bubbleSortChart').getContext('2d');
+
+            visualizerArray = [...defaultArray];
+            arrayInput.value = visualizerArray.join(',');
+
+            if (bubbleSortChartInstance) {
+                bubbleSortChartInstance.destroy();
+            }
+
+            bubbleSortChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: visualizerArray.map(String),
+                    datasets: [{
+                        label: 'Value',
+                        data: visualizerArray,
+                        backgroundColor: generateColors(visualizerArray.length),
+                        borderColor: 'rgba(107, 114, 128, 0.4)', // gray-500 with opacity
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    animation: false, // Disable Chart.js default animations for manual control
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: 'rgba(229, 231, 235, 0.5)'}, // gray-200
+                            ticks: { 
+                                color: '#4B5563', // slate-600
+                                font: { size: 10 }
+                            } 
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { 
+                                color: '#4B5563', // slate-600
+                                font: { size: 10 }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            enabled: true,
+                            backgroundColor: 'rgba(0,0,0,0.7)',
+                            titleFont: { size: 12 },
+                            bodyFont: { size: 11 },
+                            padding: 8,
+                            callbacks: {
+                                label: function(context) {
+                                    return `Value: ${context.parsed.y}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            updateChartDisplay(visualizerArray, generateColors(visualizerArray.length));
+
+            sortButton.addEventListener('click', () => {
+                if(isSorting) return;
+                const inputText = arrayInput.value;
+                const parsedArray = inputText.split(',')
+                                          .map(s => parseInt(s.trim(), 10))
+                                          .filter(n => !isNaN(n) && n >= 0); // Ensure positive numbers for better visualization
+                if (parsedArray.length > 0 && parsedArray.length <= 20) { 
+                    visualizerArray = parsedArray;
+                    updateChartDisplay(visualizerArray, generateColors(visualizerArray.length), "Ready to sort.");
+                    bubbleSortVisualize();
+                } else if (parsedArray.length > 20) {
+                    updateChartDisplay(visualizerArray, generateColors(visualizerArray.length), "Error: Max 20 numbers for visualization.");
+                } else if (parsedArray.some(n => n < 0)) {
+                    updateChartDisplay(visualizerArray, generateColors(visualizerArray.length), "Error: Please use positive numbers for visualization.");
+                } else {
+                    updateChartDisplay(visualizerArray, generateColors(visualizerArray.length), "Error: Invalid input. Use comma-separated numbers.");
+                }
+            });
+
+            resetButton.addEventListener('click', () => {
+                if (isSorting) return;
+                visualizerArray = [...defaultArray];
+                arrayInput.value = visualizerArray.join(',');
+                updateChartDisplay(visualizerArray, generateColors(visualizerArray.length), "Visualizer reset. Enter array and click Sort.");
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            showSection('introduction'); 
+            showLanguage('python'); 
+            showComparison('syntax'); 
+            // setupVisualizer will be called when the 'visualize' tab is first clicked.
+        });
+    </script>
+
+</body>
+</html>
