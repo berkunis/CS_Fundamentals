@@ -2,7 +2,9 @@
 
 Welcome to the CS_Fundamentals project! This repository serves as a resource for learning about the **Bubble Sort** algorithm. It includes its implementation in Python, C, and Java, a comparative analysis, and an interactive visualization.
 
-The `src` directory and its subfolders contain more complete, or "end," versions of the Bubble Sort algorithm for each language. During live coding sessions or as exercises, you might be guided to start with simpler "begin" versions (e.g., `bubble_sort_begin.py`, `bubble_sort_begin.c`, `BubbleSort_begin.java`) located in the same respective language subfolders. You can use the "end" versions provided here to check your work or see a more fleshed-out example.
+The `src` directory and its subfolders contain two versions of the Bubble Sort algorithm for each language:
+* A `_begin` version (e.g., `bubble_sort_begin.py`): This version has the core sorting logic (comparison and swap) partially removed. I will use these "begin" files during live coding sessions or for exercises, where you will fill in the missing parts.
+* An `_end` version (e.g., `bubble_sort_end.py`): This is the complete, working example. You can use these to check your work or see a fully fleshed-out implementation.
 
 ## Interactive Learning Experience
 
@@ -26,15 +28,18 @@ A key part of this project is the interactive web page where you can:
 ## Repository Structure
 
 * `index.html`: The main file for the interactive Single Page Application (SPA) linked above. It uses HTML, Tailwind CSS, and JavaScript.
-* `src/`: This directory contains example implementations. I encourage you to try coding your own "begin" versions and then compare them with these "end" versions, which you will find in language-specific subfolders (e.g., `src/C`, `src/Java`, `src/Python`).
-    * Example: `src/Python/bubble_sort_end.py` (A "begin" version like `src/Python/bubble_sort_begin.py` might be used for exercises).
-    * Example: `src/C/bubble_sort_end.c` (A "begin" version like `src/C/bubble_sort_begin.c` might be used for exercises).
-    * Example: `src/Java/BubbleSort_end.java` (A "begin" version like `src/Java/BubbleSort_begin.java` might be used for exercises).
-    *(Note: You'll need to create these subfolders and place the respective files within them if that's your intended structure.)*
+* `src/`: This directory contains language-specific subfolders (e.g., `src/Python/`, `src/C/`, `src/Java/`). Each subfolder contains:
+    * A `_begin` version of the Bubble Sort program (e.g., `bubble_sort_begin.py`). This is for you to complete.
+    * An `_end` version of the Bubble Sort program (e.g., `bubble_sort_end.py`). This is the completed reference.
+
+    **Example File Names (assuming you place them in these subfolders):**
+    * `src/Python/bubble_sort_begin.py` and `src/Python/bubble_sort_end.py`
+    * `src/C/bubble_sort_begin.c` and `src/C/bubble_sort_end.c`
+    * `src/Java/BubbleSort_begin.java` and `src/Java/BubbleSort_end.java`
 
 ## Pre-Work & Setup Tutorial
 
-To run the standalone code examples from the `src` directory locally, and to follow along with potential live coding, I recommend setting up your development environment.
+To run the standalone code examples from the `src` directory locally, and to follow along with live coding, I recommend setting up your development environment.
 
 ### 1. Recommended Code Editor: Cursor
 
@@ -44,52 +49,34 @@ To run the standalone code examples from the `src` directory locally, and to fol
 
 ### 2. Git Installation & GitHub Setup
 
-* **Install Git:** Download and install Git from [https://git-scm.com/](https://git-scm.com/). This is essential for version control and interacting with GitHub repositories.
-* **Configure Git User:** After installing Git, configure your name and email globally (this information is embedded in your commits):
+* **Install Git:** Download and install Git from [https://git-scm.com/](https://git-scm.com/).
+* **Configure Git User:** After installing Git, configure your name and email:
     ```bash
     git config --global user.name "Your Name or GitHub Username"
     git config --global user.email "your.email@example.com"
     ```
-    To set it for a specific project (repository), navigate into the project folder in your terminal and run the commands without `--global`.
-* **Connecting to GitHub from Cursor/VS Code:**
-    * When you clone a repository or try to push/pull changes for the first time, Cursor/VS Code will typically prompt you to authenticate with GitHub, usually by opening a browser window for you to sign in. Follow the prompts.
-    * You can check your GitHub account status in Cursor/VS Code via the "Accounts" icon (often a person silhouette in the bottom-left).
+* **Connecting to GitHub from Cursor/VS Code:** Usually prompts for authentication on first push/pull.
 
 ### 3. Language-Specific Setup
 
 * **Python:**
-    1.  Download and install Python 3 from [https://www.python.org/downloads/](https://www.python.org/downloads/).
-    2.  **Important:** During installation, make sure to check the box that says "Add Python to PATH" or "Add python.exe to Path".
-    3.  Verify installation by opening a new terminal/command prompt and typing: `python --version` (or `python3 --version`).
+    1.  Install Python 3 from [python.org](https://www.python.org/downloads/).
+    2.  Ensure "Add Python to PATH" is checked during installation.
+    3.  Verify: `python --version` (or `python3 --version`).
 
 * **C (using GCC on Windows via MSYS2):**
-    1.  **Install MSYS2:** Go to [https://www.msys2.org/](https://www.msys2.org/) and download/run the installer.
-    2.  **Update MSYS2 packages:** Open the MSYS2 terminal and run:
-        ```bash
-        pacman -Syu
-        ```
-        (You might need to close and reopen the terminal and run it again if prompted).
-    3.  **Install MinGW-w64 GCC toolchain:** In the MSYS2 terminal, run:
-        ```bash
-        pacman -S mingw-w64-x86_64-gcc
-        ```
-    4.  **Add MinGW-w64 to Windows PATH:**
-        * Find the `bin` directory of your MinGW-w64 installation (commonly `C:\msys64\mingw64\bin`).
-        * Add this directory to your System `Path` environment variable (Search for "environment variables" in Windows search -> "Edit the system environment variables" -> "Environment Variables..." -> Select "Path" under "System variables" -> "Edit..." -> "New" -> Paste the path).
-    5.  Verify: Open a *new* PowerShell or Command Prompt and type `gcc --version`.
+    1.  Install MSYS2 from [msys2.org](https://www.msys2.org/).
+    2.  In MSYS2 terminal, update: `pacman -Syu` (may need to repeat).
+    3.  Install GCC: `pacman -S mingw-w64-x86_64-gcc`.
+    4.  Add MinGW `bin` (e.g., `C:\msys64\mingw64\bin`) to Windows System `Path`.
+    5.  Verify (in a new terminal): `gcc --version`.
 
 * **Java (using OpenJDK 8 or later):**
-    1.  **Download OpenJDK:** You can get builds from various sources (e.g., Adoptium Temurin, Red Hat, Oracle OpenJDK). An LTS (Long-Term Support) version like 8, 11, 17, or 21 is recommended.
-    2.  **Extract:** Extract the downloaded ZIP/TAR.GZ file to a permanent location (e.g., `C:\Program Files\Java\your-openjdk-folder`).
-    3.  **Set `JAVA_HOME` Environment Variable:**
-        * Search "environment variables" -> "Edit the system environment variables" -> "Environment Variables..."
-        * Under "System variables", click "New...".
-        * Variable name: `JAVA_HOME`
-        * Variable value: Path to your extracted OpenJDK folder (e.g., `C:\Program Files\Java\jdk-17.0.2`)
-    4.  **Add JDK's `bin` to `Path`:**
-        * Edit the System `Path` variable.
-        * Add a new entry: `%JAVA_HOME%\bin`
-    5.  Verify: Open a *new* PowerShell or Command Prompt and type `java -version` and `javac -version`.
+    1.  Download OpenJDK (e.g., Adoptium Temurin, Red Hat). An LTS (Long-Term Support) version like 8, 11, 17, or 21 is recommended.
+    2.  Extract to a permanent location (e.g., `C:\Program Files\Java\your-openjdk-folder`).
+    3.  Set `JAVA_HOME` System Environment Variable to this path.
+    4.  Add `%JAVA_HOME%\bin` to System `Path`.
+    5.  Verify (in a new terminal): `java -version` and `javac -version`.
 
 ### 4. Verification Summary
 
@@ -97,48 +84,34 @@ After setup, open a **new terminal** and check:
 * `python --version` (or `python3 --version`)
 * `gcc --version`
 * `java -version`
-* `javac -version`
+* `javac --version`
 
-## Running the Standalone Programs (from language-specific subfolders in `src`)
+## Running the Standalone Programs
 
 Once your environment is set up and you have organized your files into subfolders within `src` (e.g., `src/Python`, `src/C`, `src/Java`):
 
-1.  **Clone or Download this Repository:**
-    * Using Git: `git clone https://github.com/berkunis/CS_Fundamentals.git`
-    * Or download the ZIP from GitHub and extract it.
+1.  **Clone or Download this Repository.**
 2.  **Navigate to the Specific Language Directory within `src`:**
-    Open your terminal or command prompt. For example, to run the Python code:
+    Open your terminal. For example, to work with the Python files:
     ```bash
     cd path/to/CS_Fundamentals/src/Python 
     ```
-    (Replace `Python` with `C` or `Java` as needed for those languages.)
+    (Replace `Python` with `C` or `Java` as needed.)
 
-3.  **Run the Python version (`bubble_sort_end.py`):**
-    (After navigating to the `src/Python` directory or wherever `bubble_sort_end.py` is)
+3.  **Python (e.g., `bubble_sort_begin.py` or `bubble_sort_end.py`):**
     ```bash
-    python bubble_sort_end.py
+    python your_python_file_name.py 
     ```
 
-4.  **Compile and Run the C version (`bubble_sort_end.c`):**
-    (After navigating to the `src/C` directory or wherever `bubble_sort_end.c` is)
-    * Compile:
-        ```bash
-        gcc bubble_sort_end.c -o bubble_sort_c_executable
-        ```
-    * Run:
-        * Windows: `.\bubble_sort_c_executable.exe`
-        * macOS/Linux: `./bubble_sort_c_executable`
+4.  **C (e.g., `bubble_sort_begin.c` or `bubble_sort_end.c`):**
+    * Compile: `gcc your_c_file_name.c -o executable_name`
+    * Run (Windows): `.\executable_name.exe`
+    * Run (macOS/Linux): `./executable_name`
 
-5.  **Compile and Run the Java version (`BubbleSort_end.java`):**
-    (After navigating to the `src/Java` directory or wherever `BubbleSort_end.java` is, and ensuring the class inside is `public class BubbleSort_end`)
-    * Compile:
-        ```bash
-        javac BubbleSort_end.java
-        ```
-    * Run:
-        ```bash
-        java BubbleSort_end
-        ```
+5.  **Java (e.g., `BubbleSort_begin.java` or `BubbleSort_end.java`):**
+    (Ensure class name inside the file matches the filename, e.g., `public class BubbleSort_begin` for `BubbleSort_begin.java`)
+    * Compile: `javac YourJavaFileName.java`
+    * Run: `java YourJavaClassName` (e.g., `java BubbleSort_begin`)
 
 ---
 
