@@ -2,7 +2,7 @@
 
 Welcome to the CS_Fundamentals project! This repository serves as a resource for learning about the **Bubble Sort** algorithm. It includes its implementation in Python, C, and Java, a comparative analysis, and an interactive visualization.
 
-The `src` directory contains more complete, or "end," versions of the Bubble Sort algorithm for each language. During live coding sessions or as exercises, we might start with simpler "begin" versions (e.g., `bubble_sort_begin.py`, `bubble_sort_begin.c`, `BubbleSort_begin.java`). You can use the "end" versions provided here to check your work or see a more fleshed-out example.
+The `src` directory and its subfolders contain more complete, or "end," versions of the Bubble Sort algorithm for each language. During live coding sessions or as exercises, you might be guided to start with simpler "begin" versions (e.g., `bubble_sort_begin.py`, `bubble_sort_begin.c`, `BubbleSort_begin.java`) located in the same respective language subfolders. You can use the "end" versions provided here to check your work or see a more fleshed-out example.
 
 ## Interactive Learning Experience
 
@@ -26,18 +26,19 @@ A key part of this project is the interactive web page where you can:
 ## Repository Structure
 
 * `index.html`: The main file for the interactive Single Page Application (SPA) linked above. It uses HTML, Tailwind CSS, and JavaScript.
-* `src/`: This directory contains example implementations. We encourage you to try coding your own "begin" versions and then compare them with these "end" versions:
-    * `bubble_sort_end.py`: A Python version. (You might work on a `bubble_sort_begin.py` in class/exercises).
-    * `bubble_sort_end.c`: A C version. (You might work on a `bubble_sort_begin.c` in class/exercises).
-    * `BubbleSort_end.java`: A Java version. (You might work on a `BubbleSort_begin.java` in class/exercises).
+* `src/`: This directory contains example implementations. I encourage you to try coding your own "begin" versions and then compare them with these "end" versions, which you will find in language-specific subfolders (e.g., `src/C`, `src/Java`, `src/Python`).
+    * Example: `src/Python/bubble_sort_end.py` (A "begin" version like `src/Python/bubble_sort_begin.py` might be used for exercises).
+    * Example: `src/C/bubble_sort_end.c` (A "begin" version like `src/C/bubble_sort_begin.c` might be used for exercises).
+    * Example: `src/Java/BubbleSort_end.java` (A "begin" version like `src/Java/BubbleSort_begin.java` might be used for exercises).
+    *(Note: You'll need to create these subfolders and place the respective files within them if that's your intended structure.)*
 
 ## Pre-Work & Setup Tutorial
 
-To run the standalone code examples from the `src` directory locally, and to follow along with potential live coding, you'll want to set up your development environment.
+To run the standalone code examples from the `src` directory locally, and to follow along with potential live coding, I recommend setting up your development environment.
 
 ### 1. Recommended Code Editor: Cursor
 
-* **Cursor** ([https://cursor.sh/](https://cursor.sh/)) is a highly recommended code editor (a fork of VS Code with integrated AI features).
+* **Cursor** ([https://cursor.sh/](https://cursor.sh/)) is a code editor I find very useful (a fork of VS Code with integrated AI features).
 * Alternatively, **Visual Studio Code (VS Code)** ([https://code.visualstudio.com/](https://code.visualstudio.com/)) is an excellent choice.
 * Ensure you install relevant extensions for Python, C/C++, and Java in your chosen editor for the best experience (e.g., extensions provided by Microsoft).
 
@@ -98,28 +99,28 @@ After setup, open a **new terminal** and check:
 * `java -version`
 * `javac -version`
 
-## Running the Standalone Programs (from `src` directory)
+## Running the Standalone Programs (from language-specific subfolders in `src`)
 
-Once your environment is set up:
+Once your environment is set up and you have organized your files into subfolders within `src` (e.g., `src/Python`, `src/C`, `src/Java`):
 
 1.  **Clone or Download this Repository:**
     * Using Git: `git clone https://github.com/berkunis/CS_Fundamentals.git`
     * Or download the ZIP from GitHub and extract it.
-2.  **Navigate to the `src` Directory:**
-    Open your terminal or command prompt and change your current directory to the `src` folder. For example:
+2.  **Navigate to the Specific Language Directory within `src`:**
+    Open your terminal or command prompt. For example, to run the Python code:
     ```bash
-    cd path/to/CS_Fundamentals/src
+    cd path/to/CS_Fundamentals/src/Python 
     ```
-    If you have created language-specific subfolders within `src` (e.g., `src/Python`, `src/C`, `src/Java`), navigate into those before running the respective commands.
+    (Replace `Python` with `C` or `Java` as needed for those languages.)
 
 3.  **Run the Python version (`bubble_sort_end.py`):**
-    (Assuming `bubble_sort_end.py` is in `src` or its subfolder)
+    (After navigating to the `src/Python` directory or wherever `bubble_sort_end.py` is)
     ```bash
     python bubble_sort_end.py
     ```
 
 4.  **Compile and Run the C version (`bubble_sort_end.c`):**
-    (Assuming `bubble_sort_end.c` is in `src` or its subfolder)
+    (After navigating to the `src/C` directory or wherever `bubble_sort_end.c` is)
     * Compile:
         ```bash
         gcc bubble_sort_end.c -o bubble_sort_c_executable
@@ -129,7 +130,7 @@ Once your environment is set up:
         * macOS/Linux: `./bubble_sort_c_executable`
 
 5.  **Compile and Run the Java version (`BubbleSort_end.java`):**
-    (Assuming `BubbleSort_end.java` is in `src` or its subfolder and the class inside is `public class BubbleSort_end`)
+    (After navigating to the `src/Java` directory or wherever `BubbleSort_end.java` is, and ensuring the class inside is `public class BubbleSort_end`)
     * Compile:
         ```bash
         javac BubbleSort_end.java
@@ -141,4 +142,4 @@ Once your environment is set up:
 
 ---
 
-We hope this project and setup guide enhance your learning experience. Start with the "begin" versions of the code in class or on your own, and use these "end" versions as a reference. Happy coding!
+I hope this project and setup guide enhance your learning experience. I encourage you to start with the "begin" versions of the code in your exercises or during our sessions, and use these "end" versions as a reference. Happy coding!
