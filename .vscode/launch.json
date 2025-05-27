@@ -3,6 +3,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "BubbleSort_begin",
+      "request": "launch",
+      "mainClass": "BubbleSort_begin",
+      "projectName": "CS_Fundamentals_9fc18110"
+    },
+    {
+      "type": "java",
       "name": "BubbleSort_end",
       "request": "launch",
       "mainClass": "BubbleSort_end",
